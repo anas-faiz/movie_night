@@ -4,13 +4,13 @@ import { useAuth } from "../utils/AuthContext";
 
 
 function Header() {
-  const { logInPage, setLogInPage } = useAuth();
+  const { islogInPage, setisLogInPage } = useAuth();
 
   const handleCLick = ()=>{
-    setLogInPage(true)
+    setisLogInPage(true)
   }
   const resetContext = ()=>{
-    setLogInPage(false);
+    setisLogInPage(false);
   }
   return (
     <header className="relative z-10 w-full flex items-center justify-between px-10 py-6">
@@ -21,7 +21,7 @@ function Header() {
           alt="Logo"
         />
       </Link>
-      {logInPage ? (
+      {islogInPage ? (
         ""
       ) : (
         <Link to="/auth">
