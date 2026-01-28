@@ -1,5 +1,5 @@
 // utils/validate.js
-export const validate = (email, password, userName,logInPage) => {
+export const validate = (email, password, userName,islogInPage) => {
   
   const emailValidation = /^\S+@\S+\.\S+$/.test(email);
   const passwordValidation =
@@ -7,7 +7,7 @@ export const validate = (email, password, userName,logInPage) => {
       password
     );
 
-  if (!logInPage && !userName.trim()) return "Username is required!";
+  if (!islogInPage && !userName.trim()) return "Username is required!";
   if (!emailValidation) return "Email is not valid!";
   if (!passwordValidation)
     return "Password must be 8+ chars, include uppercase, lowercase, number & special character!";

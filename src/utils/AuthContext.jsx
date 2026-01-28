@@ -3,10 +3,10 @@ import { createContext, useContext, useState } from "react";
 const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
-  const [logInPage, setLogInPage] = useState(false);
+  const [islogInPage, setisLogInPage] = useState(false);
 
   return (
-    <AuthContext.Provider value={{ logInPage, setLogInPage }}>
+    <AuthContext.Provider value={{ islogInPage, setisLogInPage }}>
       {children}
     </AuthContext.Provider>
   );

@@ -2,14 +2,16 @@ import { useContext, useEffect, useState} from "react";
 import { validate } from "../utils/validate";
 import { UserContext } from "../utils/UserContext";
 import { useAuth } from "../utils/AuthContext";
+import { createUserWithEmailAndPassword } from "firebase/auth"
+import { auth } from "../utils/firebase";
 
 function LogInForm() {
   const [email, setEmail] = useState("");
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState(null);
-
-  const { logInPage, setLogInPage } = useAuth();
+  
+  const { islogInPage, setisLogInPage } = useAuth();
 
   const userContext = useContext(UserContext);
 
@@ -22,19 +24,35 @@ function LogInForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const message = validate(email, password, userName, logInPage);
+    const message = validate(email, password, userName, islogInPage);
     setErrorMessage(message);
 
-    if (!message && !logInPage) {
+    if(message) return;
+
+    if (!islogInPage) {
+      //sign up logic
       setUser({
         ...user,
         username: userName,
+      });
+      createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+        // Signed up 
+          const user = userCredential.user;
+          
+        // ...
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // ..
+        setErrorMessage(errorCode + "-" + errorMessage)
       });
     }
   };
 
   const handleLoginPage = () => {
-    setLogInPage((prev) => !prev);
+    setisLogInPage((prev) => !prev);
   };
 
   useEffect(()=>{
@@ -51,10 +69,10 @@ function LogInForm() {
           className="bg-black/80 w-full max-w-md rounded-2xl shadow-2xl p-8 flex flex-col backdrop-blur-sm"
         >
           <h2 className="text-3xl font-extrabold text-center text-white mb-6">
-            {logInPage ? "Log In" : "Sign Up"}
+            {islogInPage ? "Log In" : "Sign Up"}
           </h2>
 
-          {!logInPage && (
+          {!islogInPage && (
             <input
               className="bg-gray-100 border border-gray-300 rounded-lg px-4 py-2 mb-4 text-gray-800 focus:outline-none focus:ring-2 focus:ring-red-500"
               type="text"
@@ -88,16 +106,16 @@ function LogInForm() {
             type="submit"
             className="bg-red-600 mt-4 text-white font-semibold py-2 rounded-lg cursor-pointer hover:bg-red-700 transition duration-300 shadow-md"
           >
-            {logInPage ? "Log In" : "Sign Up"}
+            {islogInPage ? "Log In" : "Sign Up"}
           </button>
 
           <p className="text-sm text-gray-300 text-center mt-6">
-            {logInPage ? "New Here?" : "Already a User?"}{" "}
+            {islogInPage ? "New Here?" : "Already a User?"}{" "}
             <span
               onClick={handleLoginPage}
               className="text-red-400 font-medium cursor-pointer hover:underline"
             >
-              {logInPage ? "Sign Up" : "Log In"}
+              {islogInPage ? "Sign Up" : "Log In"}
             </span>
           </p>
         </form>
