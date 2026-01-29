@@ -1,6 +1,9 @@
+import Header from "../components/Header";
+
 function BrowsePage(){
     return(
-        <div>
+        <div className="w-full bg-amber-900">
+            <Header/>
             Browse
         </div>
     )
