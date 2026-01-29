@@ -5,10 +5,10 @@ import { useAuth } from "../utils/AuthContext";
 
 function HomePage() {
   const bg_image = import.meta.env.VITE_home_background_image;
-  const { setLogInPage } = useAuth();
+  const { setisLogInPage } = useAuth();
 
   const handleClick = () => {
-    setLogInPage(false);
+    setisLogInPage(false);
   };
 
   return (

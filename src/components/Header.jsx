@@ -12,69 +12,51 @@ function Header() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { islogInPage, setisLogInPage } = useAuth();
-  const loggedInUser = useSelector((state) => state.user);
+  const loggedInUser = useSelector((state) => state.user?.uid);
 
-  const handleCLick = () => {
-    setisLogInPage(true);
-  };
-  const resetContext = () => {
-    setisLogInPage(false);
-  };
+  const handleCLick = () => setisLogInPage(true);
+  const resetContext = () => setisLogInPage(false);
 
   const handleSignOut = () => {
     signOut(auth)
-      .then(() => {
-        // Sign-out successful.
-        navigate("/");
-      })
-      .catch((error) => {
-        // An error happened.
-        navigate("/error");
-      });
+      .then(() => navigate("/auth"))
+      .catch(() => navigate("/error"));
   };
 
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         const { uid, email, displayName } = user;
-        dispatch(addUser({ uid: uid, email: email, displayName: displayName }));
+        dispatch(addUser({ uid, email, displayName }));
         navigate("/browse");
       } else {
-        // User is signed out
         dispatch(removeUser());
         navigate("/");
       }
     });
-  }, []);
+
+    return () => unsubscribe();
+  }, [dispatch, navigate]);
 
   return (
     <header className="relative z-10 w-full flex items-center justify-between px-10 py-6">
       <Link onClick={resetContext} to="/">
-        <img
-          className="h-12 md:h-24 object-contain drop-shadow-lg"
-          src={Logo}
-          alt="Logo"
-        />
+        <img className="h-12 md:h-24 object-contain" src={Logo} alt="Logo" />
       </Link>
+
       {loggedInUser ? (
-        <button
-          onClick={handleSignOut}
-          className="bg-red-600 text-white cursor-pointer px-5 py-2 rounded-lg font-semibold shadow-md hover:bg-red-700 hover:scale-105 transition duration-300 ease-in-out"
-        >
+        <button onClick={handleSignOut} className="bg-red-600 px-5 py-2 rounded-lg text-white">
           Log out
         </button>
-      ) : !islogInPage ? (
+      ) : (
         <Link to="/auth">
-          <button
-            onClick={handleCLick}
-            className="bg-red-600 text-white cursor-pointer px-5 py-2 rounded-lg font-semibold shadow-md hover:bg-red-700 hover:scale-105 transition duration-300 ease-in-out"
-          >
+          <button onClick={handleCLick} className="bg-red-600 px-5 py-2 rounded-lg text-white">
             Log In
           </button>
         </Link>
-      ) : null}
+      )}
     </header>
   );
 }
 
-export default Header;
+export default Header
