@@ -19,7 +19,7 @@ function Header() {
 
   const handleSignOut = () => {
     signOut(auth)
-      .then(() => navigate("/auth"))
+      .then(() =>{})
       .catch(() => navigate("/error"));
   };
 
@@ -31,12 +31,12 @@ function Header() {
         navigate("/browse");
       } else {
         dispatch(removeUser());
-        navigate("/");
+        navigate("/auth");
       }
     });
 
     return () => unsubscribe();
-  }, [dispatch, navigate]);
+  }, [onAuthStateChanged]);
 
   return (
     <header className="relative z-10 w-full flex items-center justify-between px-10 py-6">
