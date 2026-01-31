@@ -11,7 +11,7 @@ import { signOut } from "firebase/auth";
 function Header() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { islogInPage, setisLogInPage } = useAuth();
+  const { setisLogInPage } = useAuth();
   const loggedInUser = useSelector((state) => state.user?.uid);
 
   const handleCLick = () => setisLogInPage(true);
@@ -36,7 +36,7 @@ function Header() {
     });
 
     return () => unsubscribe();
-  }, [onAuthStateChanged]);
+  }, [dispatch]);
 
   return (
     <header className="relative z-10 w-full flex items-center justify-between px-10 py-6">
