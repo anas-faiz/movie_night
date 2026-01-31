@@ -7,7 +7,7 @@ function BrowsePage(){
     useNowPlayingMovies();
 
     return(
-        <div className="w-full bg-amber-900">
+        <div className="">
             <Header/>
             <Browse/>
         </div>
