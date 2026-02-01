@@ -7,7 +7,7 @@ const VideoBackground = ({ id }) => {
   useTrailerVideo(id)
 
   return (
-    <div className="w-screen aspect-video">
+    <div className="w-screen">
       {trailer && (
         <iframe
           className="w-screen h-screen"
