@@ -39,13 +39,22 @@ function Header() {
   }, [dispatch]);
 
   return (
-    <header className="relative z-10 w-full flex items-center justify-between px-10">
+    <header className="absolute z-10 w-full flex items-center justify-between px-10">
       <Link onClick={resetContext} to="/">
         <img className="h-12 md:h-24 object-contain" src={Logo} alt="Logo" />
       </Link>
 
       {loggedInUser ? (
-        <button onClick={handleSignOut} className="bg-red-600 px-5 py-2 rounded-lg text-white">
+        <button onClick={handleSignOut} className="   px-5 py-2
+          rounded-md
+          text-sm font-medium text-white
+          bg-white/10
+          border border-white/20
+          backdrop-blur-md
+          hover:bg-white/20
+          hover:border-white/40
+          transition-all duration-200
+        ">
           Log out
         </button>
       ) : (

@@ -77,7 +77,7 @@ function LogInForm() {
 
   return (
     <div>
-      <div className="relative z-10 flex items-center justify-center flex-grow px-4">
+      <div className="relative z-10 flex items-center justify-center flex-grow px-4 mt-36">
         <form
           onSubmit={handleSubmit}
           className="bg-black/80 w-full max-w-md rounded-2xl shadow-2xl p-8 flex flex-col backdrop-blur-sm"
