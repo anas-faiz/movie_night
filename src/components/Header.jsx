@@ -39,7 +39,7 @@ function Header() {
   }, [dispatch]);
 
   return (
-    <header className="relative z-10 w-full flex items-center justify-between px-10 py-6">
+    <header className="relative z-10 w-full flex items-center justify-between px-10">
       <Link onClick={resetContext} to="/">
         <img className="h-12 md:h-24 object-contain" src={Logo} alt="Logo" />
       </Link>
