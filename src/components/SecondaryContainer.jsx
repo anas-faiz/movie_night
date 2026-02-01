@@ -3,12 +3,15 @@ import MovieList from './MovieList'
 
 const SecondaryContainer = () => {
 
-  const nowPlayingMovies = useSelector((store)=>store.movies.nowPlayingMovies)
-  console.log("movies",nowPlayingMovies)
+  const movies = useSelector((store)=>store.movies)
+  console.log("movies",movies)
        
   return (
     <div className="bg-black">
-      <MovieList title={"Now Playing"} posterPath={nowPlayingMovies[0].poster_path} />
+      <MovieList title={"Now Playing"} movies={movies.nowPlayingMovies} /> 
+      <MovieList title={"Now Playing"} movies={movies.nowPlayingMovies} />
+      <MovieList title={"Now Playing"} movies={movies.nowPlayingMovies} />
+      <MovieList title={"Now Playing"} movies={movies.nowPlayingMovies} /> 
     </div>
   )
 }
