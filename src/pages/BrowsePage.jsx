@@ -7,7 +7,7 @@ function BrowsePage(){
     useNowPlayingMovies();
 
     return(
-        <div>
+        <div className="w-screen">
             <Header/>
             <Browse/>
         </div>
