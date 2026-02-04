@@ -44,7 +44,7 @@ function Header() {
         <img className="h-12 md:h-24 object-contain" src={Logo} alt="Logo" />
       </Link>
 
-      {loggedInUser ? (
+      {loggedInUser && (
         <button onClick={handleSignOut} className="   px-5 py-2
           rounded-md
           text-sm font-medium text-white
@@ -57,13 +57,7 @@ function Header() {
         ">
           Log out
         </button>
-      ) : (
-        <Link to="/auth">
-          <button onClick={handleCLick} className="bg-red-600 px-5 py-2 rounded-lg text-white">
-            Log In
-          </button>
-        </Link>
-      )}
+      ) }
     </header>
   );
 }
