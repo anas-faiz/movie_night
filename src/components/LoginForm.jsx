@@ -7,6 +7,7 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { auth } from "../utils/firebase";
+import GoogleOauth from "./GoogleOauth";
 
 function LogInForm() {
   const [email, setEmail] = useState("");
@@ -138,7 +139,9 @@ function LogInForm() {
             {islogInPage ? "Sign Up" : "Log In"}
           </span>
         </p>
+        <GoogleOauth/>
       </form>
+      
     </div>
   );
 }
