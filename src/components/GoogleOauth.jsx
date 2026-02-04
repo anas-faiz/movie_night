@@ -1,14 +1,19 @@
 import { useState } from "react";
 import google from "../assets/google.svg";
+import { signInWithGoogle } from "../utils/googleAuth";
 
 const GoogleOauth = () => {
   const [isloading, setIsLoading] = useState(false);
 
-  const handleSignIn = () => {
+  const handleSignIn = async () => {
     setIsLoading(true);
-
     try {
-    } catch (error) {}
+        const user = await signInWithGoogle();
+        console.log("logged in user", user)
+
+    } catch (error) {
+        console.log("Error in Google auth",error)
+    }
   };
 
   return (
