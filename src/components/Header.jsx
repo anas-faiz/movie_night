@@ -19,7 +19,7 @@ function Header() {
 
   const handleSignOut = () => {
     signOut(auth)
-      .then(() =>{})
+      .then(() => {})
       .catch(() => navigate("/error"));
   };
 
@@ -45,7 +45,23 @@ function Header() {
       </Link>
 
       {loggedInUser && (
-        <button onClick={handleSignOut} className="   px-5 py-2
+        <div>
+          <button className="relative m-4 p-[1.5px] rounded-full 
+              bg-gradient-to-r from-yellow-400 via-amber-300 to-yellow-500 
+              hover:from-yellow-300 hover:via-amber-200 hover:to-yellow-400
+              transition-all duration-300">
+                
+             <span className="flex items-center justify-center 
+                px-4 py-1.5 text-sm font-medium text-white 
+                bg-black/40 backdrop-blur-md 
+                rounded-full">
+                    Search your mood
+              </span>
+          </button>
+
+          <button
+            onClick={handleSignOut}
+            className="   px-5 py-2
           rounded-md
           text-sm font-medium text-white
           bg-white/10
@@ -54,12 +70,14 @@ function Header() {
           hover:bg-white/20
           hover:border-white/40
           transition-all duration-200
-        ">
-          Log out
-        </button>
-      ) }
+        "
+          >
+            Log out
+          </button>
+        </div>
+      )}
     </header>
   );
 }
 
-export default Header
+export default Header;
