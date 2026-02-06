@@ -1,6 +1,25 @@
-import React from 'react'
+import { useRef } from "react"
+import client from "../utils/openai";
 
 const GptSearchBar = () => {
+
+  const searchText = useRef(null)
+
+  const handleSearch = async ()=>{
+
+    const query = ""+ searchText.current.value+""
+
+    const completion = await client.chat.completions.create({
+  model: 'gpt-5.2',
+  messages: [
+    { role: 'developer', content: 'Talk like a pirate.' },
+    { role: 'user', content: 'Are semicolons optional in JavaScript?' },
+  ],
+});
+
+console.log(completion.choices[0].message.content);
+  }
+
   return (
     <div>
          {/* Dark overlay for readability */}
@@ -23,6 +42,7 @@ const GptSearchBar = () => {
             bg-black/50 backdrop-blur-md rounded-full">
 
             <input
+              value={searchText}
               type="text"
               placeholder="Feeling happy, sad, motivated..."
               className="flex-1 bg-transparent outline-none 
@@ -35,6 +55,7 @@ const GptSearchBar = () => {
               bg-gradient-to-r from-yellow-300 to-yellow-400
               rounded-full hover:brightness-110
               transition-all duration-200 active:scale-95"
+            onClick={handleSearch}
             >
               Search
             </button>
