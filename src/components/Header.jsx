@@ -11,12 +11,8 @@ import { signOut } from "firebase/auth";
 function Header() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { setisLogInPage } = useAuth();
   const loggedInUser = useSelector((state) => state.user?.uid);
-
-  const handleCLick = () => setisLogInPage(true);
-  const resetContext = () => setisLogInPage(false);
-
+  
   const handleSignOut = () => {
     signOut(auth)
       .then(() => {})
@@ -40,7 +36,7 @@ function Header() {
 
   return (
     <header className="absolute z-10 w-full flex items-center justify-between px-10">
-      <Link onClick={resetContext} to="/">
+      <Link to={loggedInUser ? "/browse" : "/"}>
         <img className="h-12 md:h-24 object-contain" src={Logo} alt="Logo" />
       </Link>
 
