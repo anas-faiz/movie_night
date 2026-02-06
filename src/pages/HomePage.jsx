@@ -1,17 +1,11 @@
 import { Link } from "react-router-dom";
 import Header from "../components/Header";
-import { useAuth } from "../utils/AuthContext";
 
 
 function HomePage() {
   const bg_image = import.meta.env.VITE_home_background_image;
-  const { setisLogInPage } = useAuth();
-
-  const handleClick = () => {
-    setisLogInPage(false);
-  };
-
-  return (
+  
+    return (
     <div
       className="relative flex flex-col w-full h-screen bg-cover bg-center"
       style={{ backgroundImage: `url(${bg_image})` }}
@@ -33,7 +27,6 @@ function HomePage() {
         </p>
         <Link to="/auth">
           <button
-            onClick={handleClick}
             className="mt-8 bg-red-600 text-white cursor-pointer px-6 py-3 rounded-xl font-semibold shadow-lg hover:bg-red-700 hover:scale-105 transition duration-300 ease-in-out"
           >
             Get Started

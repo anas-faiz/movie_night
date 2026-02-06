@@ -1,6 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
 import Logo from "../assets/Logo.webp";
-import { useAuth } from "../utils/AuthContext";
 import { useEffect } from "react";
 import { auth } from "../utils/firebase";
 import { onAuthStateChanged } from "firebase/auth";
@@ -9,6 +8,7 @@ import { addUser, removeUser } from "../utils/userSlice";
 import { signOut } from "firebase/auth";
 
 function Header() {
+  const gptSearch = useSelector((store)=>store.gptSearch)
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const loggedInUser = useSelector((state) => state.user?.uid);
@@ -18,6 +18,10 @@ function Header() {
       .then(() => {})
       .catch(() => navigate("/error"));
   };
+
+  const handleGtSearch = ()=>{
+    !gptSearch
+  }
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -45,7 +49,9 @@ function Header() {
           <button className="relative m-4 p-[1.5px] rounded-full 
               bg-gradient-to-r from-yellow-400 via-amber-300 to-yellow-500 
               hover:from-yellow-300 hover:via-amber-200 hover:to-yellow-400
-              transition-all duration-300">
+              transition-all duration-300"
+              onClick={handleGtSearch}
+              >
                 
              <span className="flex items-center justify-center 
                 px-4 py-1.5 text-sm font-medium text-white 

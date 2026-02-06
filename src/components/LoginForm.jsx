@@ -1,7 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { validate } from "../utils/validate";
 import { UserContext } from "../utils/UserContext";
-import { useAuth } from "../utils/AuthContext";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
