@@ -1,70 +1,66 @@
-import { useRef } from "react"
+import { useRef, useState } from "react";
 import client from "../utils/openai";
 
 const GptSearchBar = () => {
+  const searchText = useRef(null);
+  const [loading, setLoading] = useState(false);
 
-  const searchText = useRef(null)
+  const handleSearch = async () => {
+    const query = searchText.current.value.trim();
+    if (!query) return;
 
-  const handleSearch = async ()=>{
+    try {
+      setLoading(true);
 
-    const query = ""+ searchText.current.value+""
+      const response = await client.responses.create({
+        model: "gpt-5",
+        input: `Suggest movies based on this mood: ${query}`,
+      });
 
-    const completion = await client.chat.completions.create({
-  model: 'gpt-5.2',
-  messages: [
-    { role: 'developer', content: 'Talk like a pirate.' },
-    { role: 'user', content: 'Are semicolons optional in JavaScript?' },
-  ],
-});
-
-console.log(completion.choices[0].message.content);
-  }
+      console.log(response.output_text);
+    } catch (error) {
+      console.error("GPT Search failed:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div>
-         {/* Dark overlay for readability */}
+      {/* Dark overlay */}
       <div className="absolute inset-0 bg-black/60" />
 
       {/* Search Container */}
-      <div className="relative z-10 w-full max-w-2xl px-6">
-        
-        {/* Title */}
+      <div className="relative z-10 w-full max-w-2xl px-6 mx-auto">
         <h1 className="mb-6 text-center text-3xl md:text-4xl font-semibold text-white">
           Search by your mood 🎭
         </h1>
 
-        {/* Gold Border Wrapper */}
-        <div className="p-[1.5px] rounded-full 
-          bg-gradient-to-r from-yellow-400 via-amber-300 to-yellow-500">
-
-          {/* Glass Input */}
-          <div className="flex items-center gap-3 px-5 py-3 
-            bg-black/50 backdrop-blur-md rounded-full">
-
+        {/* Gold Border */}
+        <div className="p-[1.5px] rounded-full bg-linear-to-r from-yellow-400 via-amber-300 to-yellow-500">
+          <div className="flex items-center gap-3 px-5 py-3 bg-black/50 backdrop-blur-md rounded-full">
             <input
-              value={searchText}
+              ref={searchText}
               type="text"
               placeholder="Feeling happy, sad, motivated..."
-              className="flex-1 bg-transparent outline-none 
-              text-white placeholder-white/60 text-sm md:text-base"
+              className="flex-1 bg-transparent outline-none text-white placeholder-white/60"
             />
 
-            {/* Search Button */}
             <button
+              onClick={handleSearch}
+              disabled={loading}
               className="px-5 py-2 text-sm font-medium text-black
-              bg-gradient-to-r from-yellow-300 to-yellow-400
+              bg-linear-to-r from-yellow-300 to-yellow-400
               rounded-full hover:brightness-110
-              transition-all duration-200 active:scale-95"
-            onClick={handleSearch}
+              transition-all duration-200 active:scale-95 disabled:opacity-60"
             >
-              Search
+              {loading ? "Thinking..." : "Search"}
             </button>
-
           </div>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default GptSearchBar
+export default GptSearchBar;

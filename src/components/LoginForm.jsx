@@ -7,6 +7,7 @@ import {
 } from "firebase/auth";
 import { auth } from "../utils/firebase";
 import GoogleOauth from "./GoogleOauth";
+import { useAuth } from "../utils/useAuth";
 
 function LogInForm() {
   const [email, setEmail] = useState("");
@@ -15,7 +16,7 @@ function LogInForm() {
   const [errorMessage, setErrorMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const { islogInPage, setisLogInPage } = useAuth();
+  const { isLoginPage, setIsLoginPage } = useAuth();
   const userContext = useContext(UserContext);
 
   if (!userContext) {
@@ -29,7 +30,7 @@ function LogInForm() {
 
     if (isLoading) return;
 
-    const message = validate(email, password, userName, islogInPage);
+    const message = validate(email, password, userName, isLoginPage);
     setErrorMessage(message);
     if (message) return;
 
@@ -37,7 +38,7 @@ function LogInForm() {
       setIsLoading(true);
       setErrorMessage(null);
 
-      if (!islogInPage) {
+      if (!isLoginPage) {
         // SIGN UP
         setUser({ ...user, username: userName });
 
@@ -55,7 +56,7 @@ function LogInForm() {
 
   const handleLoginPage = () => {
     if (isLoading) return;
-    setisLogInPage((prev) => !prev);
+    setIsLoginPage((prev) => !prev);
     setErrorMessage(null);
   };
 
@@ -76,10 +77,10 @@ function LogInForm() {
         className="bg-black/80 w-full max-w-md rounded-2xl shadow-2xl p-8 flex flex-col backdrop-blur-sm"
       >
         <h2 className="text-3xl font-extrabold text-center text-white mb-6">
-          {islogInPage ? "Log In" : "Sign Up"}
+          {isLoginPage ? "Log In" : "Sign Up"}
         </h2>
 
-        {!islogInPage && (
+        {!isLoginPage && (
           <input
             disabled={isLoading}
             className="bg-gray-100 border border-gray-300 rounded-lg px-4 py-2 mb-4 text-gray-800 focus:outline-none focus:ring-2 focus:ring-red-500 disabled:opacity-60"
@@ -120,7 +121,7 @@ function LogInForm() {
           {isLoading && (
             <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
           )}
-          {islogInPage
+          {isLoginPage
             ? isLoading
               ? "Logging in..."
               : "Log In"
@@ -130,12 +131,12 @@ function LogInForm() {
         </button>
 
         <p className="text-sm text-gray-300 text-center mt-6">
-          {islogInPage ? "New Here?" : "Already a User?"}{" "}
+          {isLoginPage ? "New Here?" : "Already a User?"}{" "}
           <span
             onClick={handleLoginPage}
             className="text-red-400 font-medium cursor-pointer hover:underline"
           >
-            {islogInPage ? "Sign Up" : "Log In"}
+            {isLoginPage ? "Sign Up" : "Log In"}
           </span>
         </p>
         <GoogleOauth/>
