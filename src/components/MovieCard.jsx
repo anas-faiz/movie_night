@@ -1,3 +1,4 @@
+import React from "react";
 import { img_cdn_uri } from "../utils/constants";
 
 const MovieCard = ({ posterPath }) => {
@@ -20,4 +21,4 @@ const MovieCard = ({ posterPath }) => {
   );
 };
 
-export default MovieCard;
+export default React.memo(MovieCard);

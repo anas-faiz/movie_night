@@ -5,7 +5,7 @@ const VideoBackgroundSkeleton = () => {
   return (
     <div className="w-screen h-screen bg-black relative overflow-hidden">
       {/* shimmer overlay */}
-      <div className="absolute inset-0 bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 animate-pulse" />
+      <div className="absolute inset-0 bg-linear-to-r from-gray-900 via-gray-800 to-gray-900 animate-pulse" />
 
       {/* fake controls area */}
       <div className="absolute bottom-20 left-10 space-y-4">
