@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+
 const VideoTitleSkeleton = () => {
   return (
     <div className="absolute pt-24 top-0 left-0 h-screen w-full bg-linear-to-r from-black via-black/70 to-transparent text-white">
@@ -27,8 +29,17 @@ const VideoTitleSkeleton = () => {
   );
 };
 
-
 const VideoTitle = ({ title, overview }) => {
+  const [collapsed, setCollapsed] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setCollapsed(true);
+    }, 3500); // Netflix-ish delay
+
+    return () => clearTimeout(timer);
+  }, []);
+
   if (!title || !overview) {
     return <VideoTitleSkeleton />;
   }
@@ -36,12 +47,20 @@ const VideoTitle = ({ title, overview }) => {
   return (
     <div className="absolute pt-24 top-0 left-0 h-screen w-full bg-linear-to-r from-black via-black/70 to-transparent text-white">
       <div className="flex flex-col justify-center h-full px-6 md:px-16 max-w-2xl space-y-6">
-        
+
         <h1 className="text-3xl md:text-5xl font-extrabold leading-tight">
           {title}
         </h1>
 
-        <p className="text-sm md:text-base text-gray-200 line-clamp-4">
+        {/* Overview */}
+        <p
+          className={`
+            text-sm md:text-base text-gray-200
+            transition-all duration-700 ease-in-out
+            overflow-hidden
+            ${collapsed ? "line-clamp-1 opacity-80" : "line-clamp-4 opacity-100"}
+          `}
+        >
           {overview}
         </p>
 
